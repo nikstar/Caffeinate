@@ -7,21 +7,26 @@
 //
 
 import Cocoa
+import RxSwift
+import RxCocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    @IBOutlet weak var window: NSWindow!
-
-
+    
+    var state = State.loadFromDisk()
+    var caffeinate: Caffeinate! = nil
+    var menu: Menu! = nil
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        caffeinate = Caffeinate(state: state)
+        menu = Menu(state: state)
+        NSApplication.shared.nextResponder = menu as NSResponder
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        caffeinate.stop()
+        state.saveToDisk()
     }
-
-
 }
+
 
