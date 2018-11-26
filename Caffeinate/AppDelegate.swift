@@ -14,13 +14,16 @@ import RxCocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     var state = State.loadFromDisk()
-    var caffeinate: Caffeinate! = nil
-    var menu: Menu! = nil
+    var caffeinate: Caffeinate!
+    var menu: Menu! {
+        didSet {
+            NSApplication.shared.nextResponder = menu as NSResponder
+        }
+    }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        caffeinate = Caffeinate(state: state)
-        menu = Menu(state: state)
-        NSApplication.shared.nextResponder = menu as NSResponder
+        self.caffeinate = Caffeinate(state: state)
+        self.menu = Menu(state: state)
     }
     
     func applicationWillTerminate(_ notification: Notification) {

@@ -8,9 +8,11 @@
 
 import Cocoa
 import RxSwift
+import RxCocoa
 
 class Menu: NSResponder {
-    unowned var state: State
+    var state: State
+    lazy var viewModel = MenuViewModel(state: self.state)
     
     var item: NSStatusItem = {
         let bar = NSStatusBar.system
@@ -89,14 +91,10 @@ class Menu: NSResponder {
     }
     
     func setupInteractions() {
-        // Time remaining
-        Observable
-            .combineLatest(state.isActive.asObservable(), state.timeout.asObservable()) { isActive, timeout in isActive && timeout != nil }
-            .distinctUntilChanged()
-            .subscribe(onNext: { [unowned self] visible in
-                self.timeRemaining.isHidden = !visible
-            })
-            .disposed(by: disposeBag)
+        
+        viewModel.isTimeRemainingVisible.subscribe(onNext: { [weak self] isVisible in
+            self?.timeRemaining.isHidden = !isVisible
+        }).disposed(by: disposeBag)
         
         // Activate
         state.isActive.asObservable()

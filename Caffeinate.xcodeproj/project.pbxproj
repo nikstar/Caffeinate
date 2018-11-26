@@ -23,6 +23,7 @@
 		58BEDD561FFC4B75006120D1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BEDD551FFC4B75006120D1 /* MainMenu.xib */; };
 		58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D82E4C1FC0629300F67404 /* Timeout.swift */; };
 		58D82E4F1FC0702000F67404 /* Remaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D82E4E1FC0702000F67404 /* Remaining.swift */; };
+		58E70D7021AC83C900F22C01 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E70D6F21AC83C900F22C01 /* MenuViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +70,7 @@
 		58BEDD551FFC4B75006120D1 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		58D82E4C1FC0629300F67404 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
 		58D82E4E1FC0702000F67404 /* Remaining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remaining.swift; sourceTree = "<group>"; };
+		58E70D6F21AC83C900F22C01 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +89,8 @@
 		5828C78F1FBCE13300CF3EFE = {
 			isa = PBXGroup;
 			children = (
-				5828C7C11FBDC31100CF3EFE /* Carthage */,
 				5828C79A1FBCE13300CF3EFE /* Caffeinate */,
+				5828C7C11FBDC31100CF3EFE /* Carthage */,
 				5828C7991FBCE13300CF3EFE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,18 +106,14 @@
 		5828C79A1FBCE13300CF3EFE /* Caffeinate */ = {
 			isa = PBXGroup;
 			children = (
-				5828C79B1FBCE13300CF3EFE /* AppDelegate.swift */,
-				586F10832011DE2E0021C43C /* Menu.swift */,
-				5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */,
-				5874D53520AADFBE00E02C55 /* Display.swift */,
-				58B75F6F1FC03FDB0030243C /* State.swift */,
+				58E70D6921AC7F3500F22C01 /* App */,
+				58E70D6D21AC7F7400F22C01 /* Resources */,
+				58E70D6A21AC7F5300F22C01 /* View */,
 				58D82E4C1FC0629300F67404 /* Timeout.swift */,
+				58B75F6F1FC03FDB0030243C /* State.swift */,
 				58D82E4E1FC0702000F67404 /* Remaining.swift */,
-				586F1081201148D50021C43C /* Utils.swift */,
-				5828C79D1FBCE13300CF3EFE /* Assets.xcassets */,
-				58BEDD551FFC4B75006120D1 /* MainMenu.xib */,
-				5828C7A21FBCE13300CF3EFE /* Info.plist */,
-				5828C7A31FBCE13300CF3EFE /* Caffeinate.entitlements */,
+				58E70D6B21AC7F5900F22C01 /* View Model */,
+				58E70D6C21AC7F6D00F22C01 /* Model */,
 			);
 			path = Caffeinate;
 			sourceTree = "<group>";
@@ -129,6 +127,51 @@
 				5828C7AC1FBDC04000CF3EFE /* RxSwift.framework */,
 			);
 			name = Carthage;
+			sourceTree = "<group>";
+		};
+		58E70D6921AC7F3500F22C01 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5828C79B1FBCE13300CF3EFE /* AppDelegate.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		58E70D6A21AC7F5300F22C01 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				586F10832011DE2E0021C43C /* Menu.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		58E70D6B21AC7F5900F22C01 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				58E70D6F21AC83C900F22C01 /* MenuViewModel.swift */,
+			);
+			name = "View Model";
+			sourceTree = "<group>";
+		};
+		58E70D6C21AC7F6D00F22C01 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */,
+				5874D53520AADFBE00E02C55 /* Display.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		58E70D6D21AC7F7400F22C01 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5828C79D1FBCE13300CF3EFE /* Assets.xcassets */,
+				58BEDD551FFC4B75006120D1 /* MainMenu.xib */,
+				5828C7A21FBCE13300CF3EFE /* Info.plist */,
+				5828C7A31FBCE13300CF3EFE /* Caffeinate.entitlements */,
+				586F1081201148D50021C43C /* Utils.swift */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +255,7 @@
 				5828C79C1FBCE13300CF3EFE /* AppDelegate.swift in Sources */,
 				5828C7C31FBDC34F00CF3EFE /* Caffeinate.swift in Sources */,
 				586F10842011DE2E0021C43C /* Menu.swift in Sources */,
+				58E70D7021AC83C900F22C01 /* MenuViewModel.swift in Sources */,
 				58D82E4F1FC0702000F67404 /* Remaining.swift in Sources */,
 				58B75F701FC03FDB0030243C /* State.swift in Sources */,
 				58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */,
