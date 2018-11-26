@@ -11,8 +11,7 @@ import RxSwift
 import RxCocoa
 
 class Menu: NSResponder {
-    var state: State
-    lazy var viewModel = MenuViewModel(state: self.state)
+    var viewModel: MenuViewModel
     
     var item: NSStatusItem = {
         let bar = NSStatusBar.system
@@ -25,15 +24,18 @@ class Menu: NSResponder {
         return item
     }()
     
-    var timeRemaining: RemainingMenuItem! = nil
+    var timeRemaining: RemainingMenuItem
     var activate: NSMenuItem! = nil
-    var timeoutSettings: [TimeoutMenuItem] = []
+    var timeoutSubmenu: TimeoutSubmenu
     var keepScreenOn: NSMenuItem! = nil
     
     private var disposeBag = DisposeBag()
     
     init(state: State) {
-        self.state = state
+        self.viewModel = MenuViewModel(state: state)
+        
+        self.timeRemaining = RemainingMenuItem(state: state)
+        self.timeoutSubmenu = TimeoutSubmenu(state: state)
         
         super.init()
         
@@ -62,7 +64,6 @@ class Menu: NSResponder {
         
         let root = item.menu!
         
-        timeRemaining = RemainingMenuItem(state: state)
         root.addItem(timeRemaining)
         
         activate = NSMenuItem(title: "Activate", action: #selector(self.toggleActivate), keyEquivalent: "a")
@@ -70,15 +71,7 @@ class Menu: NSResponder {
         
         root.addItem(.separator())
         
-        let timeout = NSMenuItem()
-        root.addItem(timeout)
-        timeout.title = "Timeout"
-        timeout.submenu = NSMenu()
-        for item in Timeout.options.map({ $0.menuItem() }) {
-            item.action = #selector(setTimeout(sender:))
-            timeout.submenu!.addItem(item)
-            timeoutSettings.append(item)
-        }
+        root.addItem(timeoutSubmenu)
         
         keepScreenOn = NSMenuItem(title: "Keep screen on", action: #selector(self.toggleKeepScreenOn), keyEquivalent: "")
         root.addItem(keepScreenOn)
@@ -92,29 +85,20 @@ class Menu: NSResponder {
     
     func setupInteractions() {
         
-        viewModel.isTimeRemainingVisible.subscribe(onNext: { [weak self] isVisible in
-            self?.timeRemaining.isHidden = !isVisible
-        }).disposed(by: disposeBag)
+        viewModel.isTimeRemainingVisible
+            .subscribe(onNext: { [weak self] isVisible in
+                self?.timeRemaining.isHidden = !isVisible
+            })
+            .disposed(by: disposeBag)
         
-        // Activate
-        state.isActive.asObservable()
+        viewModel.isActive
             .subscribe(onNext: { [unowned self] newValue in
                 self.activate.title = newValue ? "Deactivate" : "Activate"
                 self.item.title = newValue ? "Caf" : "caf"
             })
             .disposed(by: disposeBag)
         
-        // Timeouts
-        state.timeout.asObservable()
-            .subscribe(onNext: { [unowned self] newValue in
-                for t in self.timeoutSettings {
-                    t.state = t.timeout == newValue ? .on : .off
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        // Keep screen on
-        state.keepScreenOn.asObservable()
+        viewModel.keepScreenOn
             .subscribe(onNext: { [unowned self] newValue in
                 self.keepScreenOn.state = newValue ? .on : .off
             })
@@ -125,22 +109,18 @@ class Menu: NSResponder {
     // MARK: - Actions
     
     @objc func toggleActivate() {
-        state.isActive.value.toggle()
-    }
-    
-    @objc func setTimeout(sender: TimeoutMenuItem) {
-        state.timeout.value = sender.timeout
+        viewModel.toggleActivate()
     }
     
     @objc func toggleKeepScreenOn() {
-        state.keepScreenOn.value.toggle()
+        viewModel.toggleKeepScreenOn()
     }
     
     @objc func sleepDisplayAction() {
-        sleepDisplay()
+        viewModel.sleepDisplayAction()
     }
     
     @objc func quit() {
-        NSApplication.shared.terminate(nil)
+        viewModel.quit()
     }
 }

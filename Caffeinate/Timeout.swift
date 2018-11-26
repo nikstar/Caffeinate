@@ -9,21 +9,13 @@
 import Foundation
 import Cocoa
 
-struct Timeout {
-    
-    var seconds: Int?
-    
-    static let options: [Timeout] = [nil, 3600, 2*3600, 4*3600].map(Timeout.init)
-    
-    init(seconds: Int?) {
-        self.seconds = seconds
-    }
-    
-    func menuItem() -> TimeoutMenuItem {
-        return TimeoutMenuItem(timeout: seconds)
-    }
+typealias Timeout = Int?
 
-}
+let allTimeoutOptions: [Timeout] = [nil, 3600, 2*3600, 4*3600]
+
+
+
+
 
 fileprivate let formatter: DateComponentsFormatter = {
     let f = DateComponentsFormatter()
@@ -38,22 +30,5 @@ fileprivate let formatter: DateComponentsFormatter = {
 }()
 
 
-class TimeoutMenuItem: NSMenuItem {
-    let timeout: Int?
-    
-    init(timeout: Int?) {
-        self.timeout = timeout
-        let title: String
-        if let timeout = timeout {
-            title = formatter.string(from: TimeInterval(timeout))!
-        } else {
-            title = "None"
-        }
-        super.init(title: title, action: nil, keyEquivalent: "")
-    }
-    
-    required init(coder decoder: NSCoder) {
-        fatalError("Not implemented")
-    }
-}
+
 

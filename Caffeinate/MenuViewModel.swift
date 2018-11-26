@@ -10,14 +10,32 @@ import Cocoa
 import RxSwift
 
 class MenuViewModel {
-    var state: State
-    
+    fileprivate var state: State
+    init(state: State) {
+        self.state = state
+    }
+
     lazy var isTimeRemainingVisible = Observable
         .combineLatest(self.state.isActive.asObservable(), self.state.timeout.asObservable()) { isActive, timeout in isActive && timeout != nil }
         .distinctUntilChanged()
 
+    lazy var isActive = state.isActive.asObservable()
+    lazy var keepScreenOn = state.keepScreenOn.asObservable()
     
-    init(state: State) {
-        self.state = state
+    func toggleActivate() {
+        state.isActive.value.toggle()
     }
+    
+    func toggleKeepScreenOn() {
+        state.keepScreenOn.value.toggle()
+    }
+    
+    func sleepDisplayAction() {
+        sleepDisplay()
+    }
+    
+    func quit() {
+        NSApplication.shared.terminate(nil)
+    }
+
 }
