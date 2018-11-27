@@ -19,18 +19,21 @@ final class Caffeinate {
     
     init(state: State) {
         self.viewModel = CaffeinateViewModel(state: state)
-        
+        setupObservers()
+    }
+    
+    func setupObservers() {
         Observable
-            .combineLatest(state.isActive.asObservable(), state.settings) {
-                [unowned self] isActive, settings in
+            .combineLatest(viewModel.isActive, viewModel.settings)
+            .subscribe(onNext: {
+                [unowned self] (isActive, settings) in
                 print("Caffeinate: recieved new state: \((isActive, settings.keepScreenOn, settings.timeout))")
                 if isActive {
-                    self.start(keepScreenOn: settings.keepScreenOn, timeout: settings.timeout)
+                    self.start(settings: settings)
                 } else {
                     self.forceStop()
                 }
-            }
-            .subscribe()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -38,16 +41,16 @@ final class Caffeinate {
         forceStop()
     }
     
-    private func start(keepScreenOn: Bool, timeout: Int?) {
+    private func start(settings: Settings) {
         forceStop()
         process = {
             let p = Process()
             p.launchPath = "/usr/bin/caffeinate"
             p.arguments = []
-            if keepScreenOn {
+            if settings.keepScreenOn {
                 p.arguments?.append("-d")
             }
-            if let timeout = timeout {
+            if let timeout = settings.timeout {
                 p.arguments?.append(contentsOf: ["-t", "\(timeout)"])
             }
             p.launch()
@@ -97,8 +100,7 @@ class CaffeinateViewModel {
     }
     
     lazy var isActive = state.isActive.asObservable()
-    lazy var keepScreenOn = state.settings.map { $0.keepScreenOn }
-    lazy var timeout = state.settings.map { $0.timeout }
+    var settings: Observable<Settings> { return state.settings }
     
     func processDidTerminate() {
         state.isActive.value = false

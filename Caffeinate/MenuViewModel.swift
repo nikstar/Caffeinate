@@ -16,7 +16,8 @@ class MenuViewModel {
     }
     
     lazy var isTimeRemainingVisible = Observable
-        .combineLatest(self.state.isActive.asObservable(), self.state.settings) { isActive, settings in isActive && settings.timeout != nil }
+        .combineLatest(self.state.isActive.asObservable(), self.state.settings) { isActive, settings in
+            return isActive && settings.timeout != nil }
         .distinctUntilChanged()
 
     lazy var isActive = state.isActive.asObservable()
