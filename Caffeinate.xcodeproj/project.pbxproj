@@ -117,9 +117,9 @@
 				58E70D6921AC7F3500F22C01 /* App */,
 				58E70D6D21AC7F7400F22C01 /* Resources */,
 				58E70D6A21AC7F5300F22C01 /* View */,
-				58E70D7721AC959300F22C01 /* Model */,
 				58E70D6B21AC7F5900F22C01 /* View Model */,
-				58E70D6C21AC7F6D00F22C01 /* Behaviour */,
+				58E70D7721AC959300F22C01 /* Model */,
+				58E70D6C21AC7F6D00F22C01 /* Behavior */,
 			);
 			path = Caffeinate;
 			sourceTree = "<group>";
@@ -164,13 +164,13 @@
 			name = "View Model";
 			sourceTree = "<group>";
 		};
-		58E70D6C21AC7F6D00F22C01 /* Behaviour */ = {
+		58E70D6C21AC7F6D00F22C01 /* Behavior */ = {
 			isa = PBXGroup;
 			children = (
 				5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */,
 				5874D53520AADFBE00E02C55 /* Display.swift */,
 			);
-			name = Behaviour;
+			name = Behavior;
 			sourceTree = "<group>";
 		};
 		58E70D6D21AC7F7400F22C01 /* Resources */ = {

@@ -10,8 +10,7 @@ import Foundation
 import RxSwift
 
 final class Caffeinate {
-    
-    unowned var state: State
+    private var viewModel: CaffeinateViewModel
     
     private var process: Process? = nil
 
@@ -19,7 +18,7 @@ final class Caffeinate {
     private var observer: NSObjectProtocol? = nil
     
     init(state: State) {
-        self.state = state
+        self.viewModel = CaffeinateViewModel(state: state)
         
         Observable
             .combineLatest(state.isActive.asObservable(), state.keepScreenOn.asObservable(), state.timeout.asObservable()) {
@@ -36,14 +35,11 @@ final class Caffeinate {
     }
     
     deinit {
-//        if let observer = observer {
-//            NotificationCenter.default.removeObserver(observer)
-//        }
+        stop()
     }
     
-    
     private func start(keepScreenOn: Bool, timeout: Int?) {
-        if process != nil { stop() }
+        stop()
         process = {
             let p = Process()
             p.launchPath = "/usr/bin/caffeinate"
@@ -56,23 +52,12 @@ final class Caffeinate {
             }
             p.launch()
             
-            observer = NotificationCenter.default.addObserver(forName: Process.didTerminateNotification, object: p, queue: nil) { [unowned self] note in
-                print("Caffeinate: recieved notifiaction: \(note.name.rawValue)")
-                self.state.isActive.value = false
-                if let o = self.observer {
-                    NotificationCenter.default.removeObserver(o)
-                    self.observer = nil
-                }
-            }
             return p
         }()
+        watchForTermination()
     }
     
     func stop() {
-        if let o = self.observer { // find a better way to avoid this situatuion
-            NotificationCenter.default.removeObserver(o)
-            self.observer = nil
-        }
         guard let p = process else { return }
         defer {
             process = nil
@@ -85,5 +70,36 @@ final class Caffeinate {
         p.waitUntilExit()
         print("Caffeinate: process terminated with status: \(p.terminationStatus)")
     }
+    
+    private func watchForTermination() {
+        guard let process = self.process else { fatalError() }
+        observer = NotificationCenter.default.addObserver(forName: Process.didTerminateNotification, object: process, queue: nil) { [unowned self] note in
+            print("Caffeinate: recieved notifiaction: \(note.name.rawValue)")
+            self.viewModel.processDidTerminate()
+            self.stopWatchingForTermination()
+        }
+    }
+    
+    private func stopWatchingForTermination() {
+        if let o = self.observer {
+            NotificationCenter.default.removeObserver(o)
+            self.observer = nil
+        }
+    }
 }
 
+class CaffeinateViewModel {
+    private var state: State
+    
+    init(state: State) {
+        self.state = state
+    }
+    
+    lazy var isActive = state.isActive.asObservable()
+    lazy var keepScreenOn = state.keepScreenOn.asObservable()
+    lazy var timeout = state.timeout.asObservable()
+    
+    func processDidTerminate() {
+        state.isActive.value = false
+    }
+}
