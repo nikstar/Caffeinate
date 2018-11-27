@@ -9,13 +9,31 @@
 import Foundation
 import RxSwift
 
+struct Settings: Codable {
+    var keepScreenOn: Bool = false
+    var timeout: Int? = nil
+}
+
 class State: Codable {
     var isActive = Variable(true)
-    var keepScreenOn = Variable(false)
-    var timeout: Variable<Int?> = Variable(nil)
-
+    
+    private var settingsValue = Settings() {
+        didSet {
+            settingsInput.onNext(settingsValue)
+        }
+    }
+    private lazy var settingsInput = BehaviorSubject(value: self.settingsValue)
+    lazy var settings = self.settingsInput.asObservable()
+    
     init() { }
     
+    func updateKeepScreenOn(_ newValue: Bool) {
+        settingsValue.keepScreenOn = newValue
+    }
+    
+    func updateTimeout(_ newValue: Int?) {
+        settingsValue.timeout = newValue
+    }
     
     // MARK: Persistence
     
@@ -36,21 +54,18 @@ class State: Codable {
     
     enum CodingKeys: String, CodingKey {
         case isActive
-        case keepScreenOn
-        case timeout
+        case settings
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isActive.value = try container.decode(Bool.self, forKey: .isActive)
-        keepScreenOn.value = try container.decode(Bool.self, forKey: .keepScreenOn)
-        timeout.value = try container.decode(Optional<Int>.self, forKey: .timeout)
+        settingsValue = try container.decode(Settings.self, forKey: .settings)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(isActive.value, forKey: .isActive)
-        try container.encode(keepScreenOn.value, forKey: .keepScreenOn)
-        try container.encode(timeout.value, forKey: .timeout)
+        try container.encode(settingsValue, forKey: .settings)
     }
 }

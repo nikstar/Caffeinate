@@ -113,7 +113,8 @@ class Menu: NSResponder {
     }
     
     @objc func toggleKeepScreenOn() {
-        viewModel.toggleKeepScreenOn()
+        let currentState = keepScreenOn.state == .on
+        viewModel.updateKeepScreenOn(!currentState)
     }
     
     @objc func sleepDisplayAction() {

@@ -14,9 +14,9 @@ class TimeoutViewModel {
         self.state = state
     }
 
-    lazy var selectedTimeout = self.state.timeout.asObservable()
+    lazy var selectedTimeout = self.state.settings.map { $0.timeout }
     
     func setTimeout(_ newValue: Timeout) {
-        state.timeout.value = newValue
+        state.updateTimeout(newValue)
     }
 }

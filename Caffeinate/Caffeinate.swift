@@ -21,11 +21,11 @@ final class Caffeinate {
         self.viewModel = CaffeinateViewModel(state: state)
         
         Observable
-            .combineLatest(state.isActive.asObservable(), state.keepScreenOn.asObservable(), state.timeout.asObservable()) {
-                [unowned self] isActive, keepScreenOn, timeout in
-                print("Caffeinate: recieved new state: \((isActive, keepScreenOn, timeout))")
+            .combineLatest(state.isActive.asObservable(), state.settings) {
+                [unowned self] isActive, settings in
+                print("Caffeinate: recieved new state: \((isActive, settings.keepScreenOn, settings.timeout))")
                 if isActive {
-                    self.start(keepScreenOn: keepScreenOn, timeout: timeout)
+                    self.start(keepScreenOn: settings.keepScreenOn, timeout: settings.timeout)
                 } else {
                     self.forceStop()
                 }
@@ -97,8 +97,8 @@ class CaffeinateViewModel {
     }
     
     lazy var isActive = state.isActive.asObservable()
-    lazy var keepScreenOn = state.keepScreenOn.asObservable()
-    lazy var timeout = state.timeout.asObservable()
+    lazy var keepScreenOn = state.settings.map { $0.keepScreenOn }
+    lazy var timeout = state.settings.map { $0.timeout }
     
     func processDidTerminate() {
         state.isActive.value = false

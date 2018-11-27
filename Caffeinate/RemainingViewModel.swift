@@ -22,9 +22,9 @@ class RemainingViewModel {
         self.state = state
         
         Observable
-            .combineLatest(state.isActive.asObservable(), state.timeout.asObservable()) { _, timeout in
+            .combineLatest(state.isActive.asObservable(), state.settings) { _, settings in
                 self.startDate = Date()
-                guard let timeout = timeout else { return }
+                guard let timeout = settings.timeout else { return }
                 self.timeout = TimeInterval(timeout)
                 
                 self.refreshLabel()
