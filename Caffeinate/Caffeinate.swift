@@ -27,7 +27,7 @@ final class Caffeinate {
                 if isActive {
                     self.start(keepScreenOn: keepScreenOn, timeout: timeout)
                 } else {
-                    self.stop()
+                    self.forceStop()
                 }
             }
             .subscribe()
@@ -35,11 +35,11 @@ final class Caffeinate {
     }
     
     deinit {
-        stop()
+        forceStop()
     }
     
     private func start(keepScreenOn: Bool, timeout: Int?) {
-        stop()
+        forceStop()
         process = {
             let p = Process()
             p.launchPath = "/usr/bin/caffeinate"
@@ -57,7 +57,8 @@ final class Caffeinate {
         watchForTermination()
     }
     
-    func stop() {
+    func forceStop() {
+        stopWatchingForTermination()
         guard let p = process else { return }
         defer {
             process = nil

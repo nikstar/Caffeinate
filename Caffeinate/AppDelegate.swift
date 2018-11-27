@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        caffeinate.stop()
+        caffeinate.forceStop()
         state.saveToDisk()
     }
 }
