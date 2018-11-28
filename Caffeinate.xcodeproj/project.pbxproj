@@ -16,7 +16,6 @@
 		5828C7BB1FBDC2C300CF3EFE /* RxSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */; };
 		5828C7BD1FBDC2C300CF3EFE /* RxCocoa.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */; };
 		5828C7C31FBDC34F00CF3EFE /* Caffeinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */; };
-		586F1082201148D50021C43C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F1081201148D50021C43C /* Utils.swift */; };
 		586F10842011DE2E0021C43C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F10832011DE2E0021C43C /* Menu.swift */; };
 		5874D53620AADFBE00E02C55 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874D53520AADFBE00E02C55 /* Display.swift */; };
 		58B75F701FC03FDB0030243C /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B75F6F1FC03FDB0030243C /* State.swift */; };
@@ -67,7 +66,6 @@
 		5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxSwift.framework.dSYM; path = Carthage/Build/Mac/RxSwift.framework.dSYM; sourceTree = "<group>"; };
 		5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxCocoa.framework.dSYM; path = Carthage/Build/Mac/RxCocoa.framework.dSYM; sourceTree = "<group>"; };
 		5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeinate.swift; sourceTree = "<group>"; };
-		586F1081201148D50021C43C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		586F10832011DE2E0021C43C /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		5874D53520AADFBE00E02C55 /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
 		58B75F6F1FC03FDB0030243C /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				58BEDD551FFC4B75006120D1 /* MainMenu.xib */,
 				5828C7A21FBCE13300CF3EFE /* Info.plist */,
 				5828C7A31FBCE13300CF3EFE /* Caffeinate.entitlements */,
-				586F1081201148D50021C43C /* Utils.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -284,7 +281,6 @@
 				58E70D7621AC8C8000F22C01 /* TimeoutViewModel.swift in Sources */,
 				58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */,
 				5874D53620AADFBE00E02C55 /* Display.swift in Sources */,
-				586F1082201148D50021C43C /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
