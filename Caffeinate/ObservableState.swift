@@ -47,14 +47,6 @@ class ObservableState {
         _state.isActive.toggle()
     }
     
-    func updateKeepScreenOn(_ newValue: Bool) {
-        _state.settings.keepScreenOn = newValue
-    }
-    
-    func updateTimeout(_ newValue: Int?) {
-        _state.settings.timeout = newValue
-    }
-    
     // MARK: Persistence
     
     private static let url = URL(fileURLWithPath: (NSHomeDirectory() as NSString).appendingPathComponent(".caffeinate.json"))

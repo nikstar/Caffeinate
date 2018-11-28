@@ -17,6 +17,6 @@ class TimeoutViewModel {
     lazy var selectedTimeout = self.state.settings.map { $0.timeout }
     
     func setTimeout(_ newValue: Timeout) {
-        state.updateTimeout(newValue)
+        state.updateState(\State.settings.timeout, newValue)
     }
 }
