@@ -15,7 +15,7 @@ class RemainingMenuItem: NSMenuItem {
     let viewModel: RemainingViewModel
     private var disposeBag = DisposeBag()
     
-    init(state: State) {
+    init(state: ObservableState) {
         viewModel = RemainingViewModel(state: state)
         
         super.init(title: "Remaining", action: nil, keyEquivalent: "")

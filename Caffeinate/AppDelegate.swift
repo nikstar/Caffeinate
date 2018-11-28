@@ -13,7 +13,7 @@ import RxCocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var state = State.loadFromDisk()
+    var state = ObservableState.loadFromDisk()
     var caffeinate: Caffeinate!
     var menu: Menu! {
         didSet {

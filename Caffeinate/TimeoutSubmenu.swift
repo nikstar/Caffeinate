@@ -13,7 +13,7 @@ class TimeoutSubmenu: NSMenuItem {
     let viewModel: TimeoutViewModel
     private var disposeBag = DisposeBag()
     
-    init(state: State) {
+    init(state: ObservableState) {
         self.viewModel = TimeoutViewModel(state: state)
         
         super.init(title: "Timeout", action: nil, keyEquivalent: "")

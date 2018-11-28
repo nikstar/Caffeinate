@@ -10,8 +10,8 @@ import Cocoa
 import RxSwift
 
 class MenuViewModel {
-    fileprivate var state: State
-    init(state: State) {
+    fileprivate var state: ObservableState
+    init(state: ObservableState) {
         self.state = state
     }
     
@@ -20,12 +20,12 @@ class MenuViewModel {
             return isActive && settings.timeout != nil }
         .distinctUntilChanged()
 
-    lazy var isActive = state.isActive.asObservable()
+    lazy var isActive = state.isActive
     lazy var keepScreenOn = state.settings.map { $0.keepScreenOn }
     lazy var timeout = state.settings.map { $0.timeout }
 
     func toggleActivate() {
-        state.isActive.value.toggle()
+        state.toggleActivate()
     }
     
     func updateKeepScreenOn(_ newValue: Bool) {

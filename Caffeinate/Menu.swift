@@ -31,7 +31,7 @@ class Menu: NSResponder {
     
     private var disposeBag = DisposeBag()
     
-    init(state: State) {
+    init(state: ObservableState) {
         self.viewModel = MenuViewModel(state: state)
         
         self.timeRemaining = RemainingMenuItem(state: state)

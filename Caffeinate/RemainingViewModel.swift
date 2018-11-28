@@ -10,7 +10,7 @@ import Cocoa
 import RxSwift
 
 class RemainingViewModel {
-    fileprivate var state: State
+    fileprivate var state: ObservableState
     private var disposeBag = DisposeBag()
     
     private var ticker = Observable<Int>.interval(20, scheduler: MainScheduler.instance)
@@ -18,7 +18,7 @@ class RemainingViewModel {
     private var timeRemainingInput = BehaviorSubject<TimeInterval>(value: 0.0)
     lazy var timeRemaining = self.timeRemainingInput.asObservable()
     
-    init(state: State) {
+    init(state: ObservableState) {
         self.state = state
         
         Observable

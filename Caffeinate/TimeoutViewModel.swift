@@ -9,8 +9,8 @@
 import Foundation
 
 class TimeoutViewModel {
-    fileprivate var state: State
-    init(state: State) {
+    fileprivate var state: ObservableState
+    init(state: ObservableState) {
         self.state = state
     }
 

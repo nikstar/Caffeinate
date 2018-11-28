@@ -17,7 +17,7 @@ final class Caffeinate {
     private var disposeBag = DisposeBag()
     private var observer: NSObjectProtocol? = nil
     
-    init(state: State) {
+    init(state: ObservableState) {
         self.viewModel = CaffeinateViewModel(state: state)
         setupObservers()
     }
@@ -93,9 +93,9 @@ final class Caffeinate {
 }
 
 class CaffeinateViewModel {
-    private var state: State
+    private var state: ObservableState
     
-    init(state: State) {
+    init(state: ObservableState) {
         self.state = state
     }
     
@@ -103,6 +103,6 @@ class CaffeinateViewModel {
     var settings: Observable<Settings> { return state.settings }
     
     func processDidTerminate() {
-        state.isActive.value = false
+        state.updateState(\State.isActive, false)
     }
 }
