@@ -34,8 +34,8 @@ class RemainingViewModel {
             .disposed(by: disposeBag)
         
         ticker
-            .withLatestFrom(state.isActive)
-            .filter { $0 == true }
+            .withLatestFrom(state.state)
+            .filter { $0.isActive == true }
             .subscribe(onNext: { _ in
                 self.refreshLabel()
             })

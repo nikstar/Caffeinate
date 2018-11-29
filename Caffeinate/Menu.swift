@@ -109,7 +109,7 @@ class Menu: NSResponder {
     // MARK: - Actions
     
     @objc func toggleActivate() {
-        let currentState = activate.state == .on
+        let currentState = activate.title == "Deactivate"
         viewModel.updateActivate(!currentState)
     }
     

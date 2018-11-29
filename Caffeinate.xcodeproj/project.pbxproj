@@ -16,6 +16,7 @@
 		5828C7BB1FBDC2C300CF3EFE /* RxSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */; };
 		5828C7BD1FBDC2C300CF3EFE /* RxCocoa.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */; };
 		5828C7C31FBDC34F00CF3EFE /* Caffeinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */; };
+		5846CCC821B01C6900E58085 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5846CCC721B01C6900E58085 /* State.swift */; };
 		586F10842011DE2E0021C43C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F10832011DE2E0021C43C /* Menu.swift */; };
 		5874D53620AADFBE00E02C55 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874D53520AADFBE00E02C55 /* Display.swift */; };
 		58B75F701FC03FDB0030243C /* ObservableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B75F6F1FC03FDB0030243C /* ObservableState.swift */; };
@@ -66,6 +67,7 @@
 		5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxSwift.framework.dSYM; path = Carthage/Build/Mac/RxSwift.framework.dSYM; sourceTree = "<group>"; };
 		5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxCocoa.framework.dSYM; path = Carthage/Build/Mac/RxCocoa.framework.dSYM; sourceTree = "<group>"; };
 		5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeinate.swift; sourceTree = "<group>"; };
+		5846CCC721B01C6900E58085 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		586F10832011DE2E0021C43C /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		5874D53520AADFBE00E02C55 /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
 		58B75F6F1FC03FDB0030243C /* ObservableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableState.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		58E70D7721AC959300F22C01 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5846CCC721B01C6900E58085 /* State.swift */,
 				58B75F6F1FC03FDB0030243C /* ObservableState.swift */,
 				58D82E4C1FC0629300F67404 /* Timeout.swift */,
 			);
@@ -279,6 +282,7 @@
 				58E70D7021AC83C900F22C01 /* MenuViewModel.swift in Sources */,
 				58D82E4F1FC0702000F67404 /* RemainingMenuItem.swift in Sources */,
 				58B75F701FC03FDB0030243C /* ObservableState.swift in Sources */,
+				5846CCC821B01C6900E58085 /* State.swift in Sources */,
 				58E70D7621AC8C8000F22C01 /* TimeoutViewModel.swift in Sources */,
 				58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */,
 				5874D53620AADFBE00E02C55 /* Display.swift in Sources */,
