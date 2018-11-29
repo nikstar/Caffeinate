@@ -21,15 +21,14 @@ class MenuViewModel {
         .distinctUntilChanged()
 
     lazy var isActive = state.isActive
-    lazy var keepScreenOn = state.settings.map { $0.keepScreenOn }
-    lazy var timeout = state.settings.map { $0.timeout }
+    lazy var isKeepScreenOnChecked = state.settings.map { $0.keepScreenOn }
 
-    func toggleActivate() {
-        state.toggleActivate()
+    func updateActivate(_ newValue: Bool) {
+        state.update(\.isActive, newValue)
     }
     
     func updateKeepScreenOn(_ newValue: Bool) {
-        state.update(\State.settings.keepScreenOn, newValue)
+        state.update(\.settings.keepScreenOn, newValue)
     }
     
     func sleepDisplayAction() {
@@ -39,5 +38,4 @@ class MenuViewModel {
     func quit() {
         NSApplication.shared.terminate(nil)
     }
-
 }

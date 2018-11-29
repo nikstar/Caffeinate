@@ -9,11 +9,13 @@
 import Cocoa
 import RxSwift
 
+fileprivate var tickerTimeInterval = 20.0
+
 class RemainingViewModel {
     fileprivate var state: ObservableState
     private var disposeBag = DisposeBag()
     
-    private var ticker = Observable<Int>.interval(20, scheduler: MainScheduler.instance)
+    private var ticker = Observable<Int>.interval(tickerTimeInterval, scheduler: MainScheduler.instance)
     
     private var timeRemainingInput = BehaviorSubject<TimeInterval>(value: 0.0)
     lazy var timeRemaining = self.timeRemainingInput.asObservable()
@@ -21,18 +23,19 @@ class RemainingViewModel {
     init(state: ObservableState) {
         self.state = state
         
-        Observable
-            .combineLatest(state.isActive.asObservable(), state.settings) { _, settings in
+        state.state
+            .subscribe(onNext: { state in
                 self.startDate = Date()
-                guard let timeout = settings.timeout else { return }
+                guard let timeout = state.settings.timeout else { return }
                 self.timeout = TimeInterval(timeout)
                 
                 self.refreshLabel()
-            }
-            .subscribe()
+            })
             .disposed(by: disposeBag)
         
         ticker
+            .withLatestFrom(state.isActive)
+            .filter { $0 == true }
             .subscribe(onNext: { _ in
                 self.refreshLabel()
             })

@@ -98,7 +98,7 @@ class Menu: NSResponder {
             })
             .disposed(by: disposeBag)
         
-        viewModel.keepScreenOn
+        viewModel.isKeepScreenOnChecked
             .subscribe(onNext: { [unowned self] newValue in
                 self.keepScreenOn.state = newValue ? .on : .off
             })
@@ -109,7 +109,8 @@ class Menu: NSResponder {
     // MARK: - Actions
     
     @objc func toggleActivate() {
-        viewModel.toggleActivate()
+        let currentState = activate.state == .on
+        viewModel.updateActivate(!currentState)
     }
     
     @objc func toggleKeepScreenOn() {

@@ -43,10 +43,6 @@ class ObservableState {
     }
     
     
-    func toggleActivate() {
-        _state.isActive.toggle()
-    }
-    
     // MARK: Persistence
     
     private static let url = URL(fileURLWithPath: (NSHomeDirectory() as NSString).appendingPathComponent(".caffeinate.json"))
