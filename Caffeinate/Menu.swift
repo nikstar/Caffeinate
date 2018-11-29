@@ -79,7 +79,7 @@ class Menu: NSResponder {
         
         root.addItem(.separator())
         
-        let sleepDisplayItem = NSMenuItem(title: "Turn display off", action: #selector(self.sleepDisplayAction), keyEquivalent: "")
+        let sleepDisplayItem = NSMenuItem(title: "Turn off display", action: #selector(self.sleepDisplayAction), keyEquivalent: "")
         root.addItem(sleepDisplayItem)
         
         let sleepItem = NSMenuItem(title: "Sleep", action: #selector(self.sleep), keyEquivalent: "")
