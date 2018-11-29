@@ -38,7 +38,7 @@ class ObservableState {
         self._state = state
     }
     
-    func updateState<A>(_ keyPath: WritableKeyPath<State, A>, _ newValue: A) {
+    func update<A>(_ keyPath: WritableKeyPath<State, A>, _ newValue: A) {
         _state[keyPath: keyPath] = newValue
     }
     

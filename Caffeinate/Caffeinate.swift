@@ -103,6 +103,6 @@ class CaffeinateViewModel {
     var settings: Observable<Settings> { return state.settings }
     
     func processDidTerminate() {
-        state.updateState(\State.isActive, false)
+        state.update(\State.isActive, false)
     }
 }

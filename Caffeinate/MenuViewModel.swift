@@ -29,7 +29,7 @@ class MenuViewModel {
     }
     
     func updateKeepScreenOn(_ newValue: Bool) {
-        state.updateState(\State.settings.keepScreenOn, newValue)
+        state.update(\State.settings.keepScreenOn, newValue)
     }
     
     func sleepDisplayAction() {
