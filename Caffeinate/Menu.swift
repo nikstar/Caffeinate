@@ -85,7 +85,9 @@ class Menu: NSResponder {
         let sleepItem = NSMenuItem(title: "Sleep", action: #selector(self.sleep), keyEquivalent: "")
         root.addItem(sleepItem)
         
-        root.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
+        root.addItem(.separator())
+        
+        root.addItem(withTitle: "Quit Caffeinate", action: #selector(quit), keyEquivalent: "q")
     }
     
     func setupInteractions() {
