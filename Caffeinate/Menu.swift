@@ -58,8 +58,9 @@ class Menu: NSResponder {
         // |- Timeout
         //    |- ....
         // |- Keep screen on
-        // |- Turn off display now
         // |- ---
+        // |- Turn off display
+        // |- Sleep
         // |- Quit
         
         let root = item.menu!
@@ -75,10 +76,14 @@ class Menu: NSResponder {
         
         keepScreenOn = NSMenuItem(title: "Keep screen on", action: #selector(self.toggleKeepScreenOn), keyEquivalent: "")
         root.addItem(keepScreenOn)
-        let sleepDisplayItem = NSMenuItem(title: "Turn display off now", action: #selector(self.sleepDisplayAction), keyEquivalent: "")
-        root.addItem(sleepDisplayItem)
         
         root.addItem(.separator())
+        
+        let sleepDisplayItem = NSMenuItem(title: "Turn display off", action: #selector(self.sleepDisplayAction), keyEquivalent: "")
+        root.addItem(sleepDisplayItem)
+        
+        let sleepItem = NSMenuItem(title: "Sleep", action: #selector(self.sleep), keyEquivalent: "")
+        root.addItem(sleepItem)
         
         root.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
     }
@@ -120,6 +125,10 @@ class Menu: NSResponder {
     
     @objc func sleepDisplayAction() {
         viewModel.sleepDisplayAction()
+    }
+    
+    @objc func sleep() {
+        viewModel.sleepAction()
     }
     
     @objc func quit() {

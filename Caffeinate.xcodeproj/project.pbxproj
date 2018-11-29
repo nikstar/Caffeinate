@@ -18,7 +18,7 @@
 		5828C7C31FBDC34F00CF3EFE /* Caffeinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */; };
 		5846CCC821B01C6900E58085 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5846CCC721B01C6900E58085 /* State.swift */; };
 		586F10842011DE2E0021C43C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F10832011DE2E0021C43C /* Menu.swift */; };
-		5874D53620AADFBE00E02C55 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874D53520AADFBE00E02C55 /* Display.swift */; };
+		5874D53620AADFBE00E02C55 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874D53520AADFBE00E02C55 /* Actions.swift */; };
 		58B75F701FC03FDB0030243C /* ObservableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B75F6F1FC03FDB0030243C /* ObservableState.swift */; };
 		58BEDD561FFC4B75006120D1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58BEDD551FFC4B75006120D1 /* MainMenu.xib */; };
 		58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D82E4C1FC0629300F67404 /* Timeout.swift */; };
@@ -69,7 +69,7 @@
 		5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeinate.swift; sourceTree = "<group>"; };
 		5846CCC721B01C6900E58085 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		586F10832011DE2E0021C43C /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
-		5874D53520AADFBE00E02C55 /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
+		5874D53520AADFBE00E02C55 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		58B75F6F1FC03FDB0030243C /* ObservableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableState.swift; sourceTree = "<group>"; };
 		58BEDD551FFC4B75006120D1 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		58D82E4C1FC0629300F67404 /* Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */,
-				5874D53520AADFBE00E02C55 /* Display.swift */,
+				5874D53520AADFBE00E02C55 /* Actions.swift */,
 			);
 			name = Behavior;
 			sourceTree = "<group>";
@@ -285,7 +285,7 @@
 				5846CCC821B01C6900E58085 /* State.swift in Sources */,
 				58E70D7621AC8C8000F22C01 /* TimeoutViewModel.swift in Sources */,
 				58D82E4D1FC0629300F67404 /* Timeout.swift in Sources */,
-				5874D53620AADFBE00E02C55 /* Display.swift in Sources */,
+				5874D53620AADFBE00E02C55 /* Actions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

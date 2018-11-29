@@ -36,6 +36,10 @@ class MenuViewModel {
         sleepDisplay()
     }
     
+    func sleepAction() {
+        sleep()
+    }
+    
     func quit() {
         NSApplication.shared.terminate(nil)
     }
