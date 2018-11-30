@@ -15,8 +15,9 @@ class Menu: NSResponder {
     private var disposeBag = DisposeBag()
     
     var statusBarItem: NSStatusItem = {
-        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        item.button!.image = Resources.menuIcon
+        let icon = Resources.menuIcon
+        let item = NSStatusBar.system.statusItem(withLength: icon.size.width + 10) // a bit off center
+        item.button!.image = icon
         item.menu = NSMenu()
         return item
     }()

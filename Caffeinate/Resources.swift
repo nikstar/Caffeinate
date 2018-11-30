@@ -16,4 +16,3 @@ enum Resources {
         return i
     }()
 }
-
