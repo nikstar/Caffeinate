@@ -15,13 +15,9 @@ class Menu: NSResponder {
     private var disposeBag = DisposeBag()
     
     var statusBarItem: NSStatusItem = {
-        let bar = NSStatusBar.system
-        let item = bar.statusItem(withLength: NSStatusItem.variableLength)
-        item.title = "Caf"
-        item.highlightMode = true
-        let menu = NSMenu()
-        item.menu = menu
-        
+        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        item.button!.image = Resources.menuIcon
+        item.menu = NSMenu()
         return item
     }()
     
@@ -29,7 +25,6 @@ class Menu: NSResponder {
     var activateMenuItem: NSMenuItem! = nil
     var timeoutSubmenu: TimeoutSubmenu
     var keepScreenOnMenuItem: NSMenuItem! = nil
-    
     
     init(state: ObservableState) {
         self.viewModel = MenuViewModel(state: state)
@@ -89,9 +84,9 @@ class Menu: NSResponder {
             .disposed(by: disposeBag)
         
         viewModel.isActive
-            .subscribe(onNext: { [unowned self] newValue in
-                self.activateMenuItem.title = newValue ? "Deactivate" : "Activate"
-                self.statusBarItem.title = newValue ? "Caf" : "caf"
+            .subscribe(onNext: { [unowned self] isActive in
+                self.activateMenuItem.title = isActive ? "Deactivate" : "Activate"
+                self.statusBarItem.button!.appearsDisabled = !isActive
             })
             .disposed(by: disposeBag)
         
