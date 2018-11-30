@@ -10,20 +10,20 @@ import Foundation
 import RxSwift
 
 class ObservableState {
-    fileprivate var _state: State = State() {
+    fileprivate var state: State = State() {
         didSet {
-            stateInput.onNext(_state)
+            stateInput.onNext(state)
         }
     }
-    private lazy var stateInput = BehaviorSubject(value: self._state)
-    lazy var state = self.stateInput.asObservable()
+    private lazy var stateInput = BehaviorSubject(value: self.state)
+    lazy var observable = self.stateInput.asObservable()
     
     init(state: State) {
-        self._state = state
+        self.state = state
     }
     
     func update<A>(_ keyPath: WritableKeyPath<State, A>, _ newValue: A) {
-        _state[keyPath: keyPath] = newValue
+        state[keyPath: keyPath] = newValue
     }
 }
 
@@ -42,7 +42,7 @@ extension ObservableState {
     }
     
     func saveToDisk() {
-        let data = try! JSONEncoder().encode(_state)
+        let data = try! JSONEncoder().encode(state)
         try! data.write(to: ObservableState.url)
     }
 }

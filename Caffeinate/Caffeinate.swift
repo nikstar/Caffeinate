@@ -18,7 +18,7 @@ final class Caffeinate {
     
     init(state: ObservableState) {
         self.state = state
-        state.state
+        state.observable
             .subscribe(onNext: { [unowned self] state in
                 print("Caffeinate: recieved new state: \((state.isActive, state.settings.keepScreenOn, state.settings.timeout))")
                 if state.isActive {

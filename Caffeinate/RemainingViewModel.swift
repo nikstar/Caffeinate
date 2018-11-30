@@ -23,7 +23,7 @@ class RemainingViewModel {
     init(state: ObservableState) {
         self.state = state
         
-        state.state
+        state.observable
             .subscribe(onNext: { state in
                 self.startDate = Date()
                 guard let timeout = state.settings.timeout else { return }
@@ -34,7 +34,7 @@ class RemainingViewModel {
             .disposed(by: disposeBag)
         
         ticker
-            .withLatestFrom(state.state)
+            .withLatestFrom(state.observable)
             .filter { $0.isActive == true }
             .subscribe(onNext: { _ in
                 self.refreshLabel()

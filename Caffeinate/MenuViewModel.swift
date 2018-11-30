@@ -15,14 +15,14 @@ class MenuViewModel {
         self.state = state
     }
     
-    lazy var isTimeRemainingVisible = state.state
+    lazy var isTimeRemainingVisible = state.observable
         .map { state in
             return state.isActive && state.settings.timeout != nil
         }
         .distinctUntilChanged()
 
-    lazy var isActive = state.state.map { $0.isActive }.distinctUntilChanged()
-    lazy var isKeepScreenOnChecked = state.state.map { $0.settings.keepScreenOn }.distinctUntilChanged()
+    lazy var isActive = state.observable.map { $0.isActive }.distinctUntilChanged()
+    lazy var isKeepScreenOnChecked = state.observable.map { $0.settings.keepScreenOn }.distinctUntilChanged()
 
     func updateActivate(_ newValue: Bool) {
         state.update(\.isActive, newValue)
