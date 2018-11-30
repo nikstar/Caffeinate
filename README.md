@@ -1,5 +1,5 @@
 # Caffeinate
-Carthage is a fresh take on a status bar app that prevents your computer from going to sleep
+Caffeinate is a fresh take on a status bar app that prevents your computer from going to sleep
 
 ## Installation
 You can download the latest stable version from [Releases](https://github.com/nikstar/Caffeinate/releases). 
