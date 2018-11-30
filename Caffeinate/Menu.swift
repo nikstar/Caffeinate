@@ -12,8 +12,9 @@ import RxCocoa
 
 class Menu: NSResponder {
     var viewModel: MenuViewModel
+    private var disposeBag = DisposeBag()
     
-    var item: NSStatusItem = {
+    var statusBarItem: NSStatusItem = {
         let bar = NSStatusBar.system
         let item = bar.statusItem(withLength: NSStatusItem.variableLength)
         item.title = "Caf"
@@ -24,17 +25,15 @@ class Menu: NSResponder {
         return item
     }()
     
-    var timeRemaining: RemainingMenuItem
-    var activate: NSMenuItem! = nil
+    var timeRemainingMenuItem: RemainingMenuItem
+    var activateMenuItem: NSMenuItem! = nil
     var timeoutSubmenu: TimeoutSubmenu
-    var keepScreenOn: NSMenuItem! = nil
+    var keepScreenOnMenuItem: NSMenuItem! = nil
     
-    private var disposeBag = DisposeBag()
     
     init(state: ObservableState) {
         self.viewModel = MenuViewModel(state: state)
-        
-        self.timeRemaining = RemainingMenuItem(state: state)
+        self.timeRemainingMenuItem = RemainingMenuItem(state: state)
         self.timeoutSubmenu = TimeoutSubmenu(state: state)
         
         super.init()
@@ -47,93 +46,80 @@ class Menu: NSResponder {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Setup
-    
     func setupStructure() {
-        // .
-        // |- (hidden) Time remaining
-        // |- Activate
-        // |- ---
-        // |- Timeout
-        //    |- ....
-        // |- Keep screen on
-        // |- ---
-        // |- Turn off display
-        // |- Sleep
-        // |- Quit
-        
-        let root = item.menu!
-        
-        root.addItem(timeRemaining)
-        
-        activate = NSMenuItem(title: "Activate", action: #selector(self.toggleActivate), keyEquivalent: "a")
-        root.addItem(activate)
-        
-        root.addItem(.separator())
-        
-        root.addItem(timeoutSubmenu)
-        
-        keepScreenOn = NSMenuItem(title: "Keep screen on", action: #selector(self.toggleKeepScreenOn), keyEquivalent: "")
-        root.addItem(keepScreenOn)
-        
-        root.addItem(.separator())
-        
-        let sleepDisplayItem = NSMenuItem(title: "Turn off display", action: #selector(self.sleepDisplayAction), keyEquivalent: "")
-        root.addItem(sleepDisplayItem)
-        
-        let sleepItem = NSMenuItem(title: "Sleep", action: #selector(self.sleep), keyEquivalent: "")
-        root.addItem(sleepItem)
-        
-        root.addItem(.separator())
-        
-        root.addItem(withTitle: "Quit Caffeinate", action: #selector(quit), keyEquivalent: "q")
+         self.activateMenuItem = MenuItem(title: "Activate", keyEquivalent: "a") { [viewModel] item in
+            let currentState = item.title == "Deactivate"
+            viewModel.updateActivate(!currentState)
+        }
+        self.keepScreenOnMenuItem = MenuItem(title: "Keep screen on", keyEquivalent: nil) { [viewModel] item in
+            let currentState = item.state == .on
+            viewModel.updateKeepScreenOn(!currentState)
+        }
+        let sleepDisplayMenuItem = MenuItem(title: "Turn off display", keyEquivalent: nil) { [viewModel] _ in
+            viewModel.sleepDisplayAction()
+        }
+        let sleepMenuItem = MenuItem(title: "Sleep", keyEquivalent: nil) { [viewModel] _ in
+            viewModel.sleepAction()
+        }
+        let quitMenuItem = MenuItem(title: "Quit Caffeinate", keyEquivalent: "q") { [viewModel] _ in
+            viewModel.quit()
+        }
+        statusBarItem.menu!.items = [
+            self.timeRemainingMenuItem,
+            self.activateMenuItem,
+            .separator(),
+            
+            self.timeoutSubmenu,
+            keepScreenOnMenuItem,
+            .separator(),
+            
+            sleepDisplayMenuItem,
+            sleepMenuItem,
+            .separator(),
+            
+            quitMenuItem
+        ]
     }
     
     func setupInteractions() {
-        
         viewModel.isTimeRemainingVisible
             .subscribe(onNext: { [weak self] isVisible in
-                self?.timeRemaining.isHidden = !isVisible
+                self?.timeRemainingMenuItem.isHidden = !isVisible
             })
             .disposed(by: disposeBag)
         
         viewModel.isActive
             .subscribe(onNext: { [unowned self] newValue in
-                self.activate.title = newValue ? "Deactivate" : "Activate"
-                self.item.title = newValue ? "Caf" : "caf"
+                self.activateMenuItem.title = newValue ? "Deactivate" : "Activate"
+                self.statusBarItem.title = newValue ? "Caf" : "caf"
             })
             .disposed(by: disposeBag)
         
         viewModel.isKeepScreenOnChecked
             .subscribe(onNext: { [unowned self] newValue in
-                self.keepScreenOn.state = newValue ? .on : .off
+                self.keepScreenOnMenuItem.state = newValue ? .on : .off
             })
             .disposed(by: disposeBag)
     }
+ }
+
+
+class MenuItem: NSMenuItem {
+    typealias Callback = (MenuItem) -> ()
+    var callback: Callback?
     
-    
-    // MARK: - Actions
-    
-    @objc func toggleActivate() {
-        let currentState = activate.title == "Deactivate"
-        viewModel.updateActivate(!currentState)
+    init(title: String, keyEquivalent: String?, action callback: Callback?) {
+        self.callback = callback
+        super.init(title: title, action: nil, keyEquivalent: keyEquivalent ?? "")
+        self.target = self
+        self.action = #selector(onClick)
     }
     
-    @objc func toggleKeepScreenOn() {
-        let currentState = keepScreenOn.state == .on
-        viewModel.updateKeepScreenOn(!currentState)
+    required init(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func sleepDisplayAction() {
-        viewModel.sleepDisplayAction()
-    }
-    
-    @objc func sleep() {
-        viewModel.sleepAction()
-    }
-    
-    @objc func quit() {
-        viewModel.quit()
+    @objc func onClick() {
+        callback?(self)
     }
 }
