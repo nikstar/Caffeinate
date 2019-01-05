@@ -8,5 +8,5 @@ For the app to launch at startup, you will need to add it to *System Preferences
 
 ## Building from source
 1. [Install Carthage](https://github.com/Carthage/Carthage#installing-carthage).
-2. In the project folder run `carthage update --platform macOS --no-use-binaries`.
+2. In the project directory run `carthage bootstrap --platform macOS --no-use-binaries`.
 3. Build the project.
