@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class Menu: NSResponder {
+final class Menu: NSResponder, NSMenuDelegate {
     let viewModel: MenuViewModel
     private var observations: [ObservableState.Observation] = []
 
@@ -25,6 +25,7 @@ final class Menu: NSResponder {
     var activateMenuItem: NSMenuItem! = nil
     var timeoutSubmenu: TimeoutSubmenu
     var keepScreenOnMenuItem: NSMenuItem! = nil
+    var launchAtLoginMenuItem: NSMenuItem! = nil
 
     init(state: ObservableState) {
         self.viewModel = MenuViewModel(state: state)
@@ -50,6 +51,9 @@ final class Menu: NSResponder {
             let currentState = item.state == .on
             viewModel.updateKeepScreenOn(!currentState)
         }
+        self.launchAtLoginMenuItem = MenuItem(title: "Launch at Login", keyEquivalent: nil) { [viewModel] _ in
+            viewModel.toggleLaunchAtLogin()
+        }
         let sleepDisplayMenuItem = MenuItem(title: "Turn off display", keyEquivalent: nil) { [viewModel] _ in
             viewModel.sleepDisplayAction()
         }
@@ -66,6 +70,7 @@ final class Menu: NSResponder {
 
             self.timeoutSubmenu,
             keepScreenOnMenuItem,
+            launchAtLoginMenuItem,
             .separator(),
 
             sleepDisplayMenuItem,
@@ -74,6 +79,7 @@ final class Menu: NSResponder {
 
             quitMenuItem
         ]
+        statusBarItem.menu?.delegate = self
     }
 
     private func setupInteractions() {
@@ -94,6 +100,15 @@ final class Menu: NSResponder {
         observations.append(viewModel.observeIsKeepScreenOnChecked { [weak self] newValue in
             self?.keepScreenOnMenuItem.state = newValue ? .on : .off
         })
+
+        observations.append(viewModel.observeLaunchAtLoginStatus { [weak self] status in
+            self?.launchAtLoginMenuItem.state = status.menuState
+            self?.launchAtLoginMenuItem.title = status.title
+        })
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        viewModel.refreshLaunchAtLoginStatus()
     }
 }
 
