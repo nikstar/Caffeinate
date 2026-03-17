@@ -6,52 +6,78 @@
 //  Copyright © 2018 Nikita Starshinov. All rights reserved.
 //
 
-import Cocoa
-import RxSwift
+import Foundation
 
-fileprivate var tickerTimeInterval = 20.0
+private let tickerTimeInterval: TimeInterval = 20.0
 
-class RemainingViewModel {
-    fileprivate var state: ObservableState
-    private var disposeBag = DisposeBag()
-    
-    private var ticker = Observable<Int>.interval(tickerTimeInterval, scheduler: MainScheduler.instance)
-    
-    private var timeRemainingInput = BehaviorSubject<TimeInterval>(value: 0.0)
-    lazy var timeRemaining = self.timeRemainingInput.asObservable()
-    
-    init(state: ObservableState) {
-        self.state = state
-        
-        state.observable
-            .subscribe(onNext: { state in
-                self.startDate = Date()
-                guard let timeout = state.settings.timeout else { return }
-                self.timeout = TimeInterval(timeout)
-                
-                self.refreshLabel()
-            })
-            .disposed(by: disposeBag)
-        
-        ticker
-            .withLatestFrom(state.observable)
-            .filter { $0.isActive == true }
-            .subscribe(onNext: { _ in
-                self.refreshLabel()
-            })
-            .disposed(by: disposeBag)
+final class RemainingViewModel {
+    private let state: ObservableState
+    private var stateObservation: ObservableState.Observation?
+    private var ticker: Timer?
 
+    var onTimeRemainingChanged: ((TimeInterval) -> Void)? {
+        didSet {
+            refreshLabel()
+        }
     }
-    
-    func refreshLabel() {
-        timeRemainingInput.onNext(self.endDate.timeIntervalSinceNow)
-    }
-    
+
     private(set) var startDate = Date()
     private(set) var timeout: TimeInterval = 0
+
     var endDate: Date {
-        return startDate + timeout
+        startDate.addingTimeInterval(timeout)
     }
-    
-    
+
+    init(state: ObservableState) {
+        self.state = state
+        stateObservation = state.observe { [weak self] state in
+            self?.handleStateChange(state)
+        }
+    }
+
+    deinit {
+        stopTicker()
+    }
+
+    func refreshLabel() {
+        let timeRemaining = max(0, endDate.timeIntervalSinceNow)
+        onTimeRemainingChanged?(timeRemaining)
+    }
+
+    private func handleStateChange(_ state: State) {
+        startDate = Date()
+
+        guard let timeout = state.settings.timeout else {
+            self.timeout = 0
+            stopTicker()
+            onTimeRemainingChanged?(0)
+            return
+        }
+
+        self.timeout = TimeInterval(timeout)
+        refreshLabel()
+
+        if state.isActive {
+            startTicker()
+        } else {
+            stopTicker()
+        }
+    }
+
+    private func startTicker() {
+        guard ticker == nil else {
+            return
+        }
+
+        let ticker = Timer(timeInterval: tickerTimeInterval, repeats: true) { [weak self] _ in
+            self?.refreshLabel()
+        }
+        RunLoop.main.add(ticker, forMode: .common)
+        self.ticker = ticker
+    }
+
+    private func stopTicker() {
+        ticker?.invalidate()
+        ticker = nil
+    }
 }

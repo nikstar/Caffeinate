@@ -7,42 +7,41 @@
 //
 
 import Cocoa
-import RxSwift
-import RxCocoa
 
-class Menu: NSResponder {
-    var viewModel: MenuViewModel
-    private var disposeBag = DisposeBag()
-    
+final class Menu: NSResponder {
+    let viewModel: MenuViewModel
+    private var observations: [ObservableState.Observation] = []
+
     var statusBarItem: NSStatusItem = {
         let icon = Resources.menuIcon
-        let item = NSStatusBar.system.statusItem(withLength: icon.size.width + 10) // a bit off center
-        item.button!.image = icon
+        let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        item.button?.image = icon
+        item.button?.imagePosition = .imageOnly
         item.menu = NSMenu()
         return item
     }()
-    
+
     var timeRemainingMenuItem: RemainingMenuItem
     var activateMenuItem: NSMenuItem! = nil
     var timeoutSubmenu: TimeoutSubmenu
     var keepScreenOnMenuItem: NSMenuItem! = nil
-    
+
     init(state: ObservableState) {
         self.viewModel = MenuViewModel(state: state)
         self.timeRemainingMenuItem = RemainingMenuItem(state: state)
         self.timeoutSubmenu = TimeoutSubmenu(state: state)
-        
+
         super.init()
-        
+
         setupStructure()
         setupInteractions()
     }
-    
+
     required init(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setupStructure() {
+
+    private func setupStructure() {
          self.activateMenuItem = MenuItem(title: "Activate", keyEquivalent: "a") { [viewModel] item in
             let currentState = item.title == "Deactivate"
             viewModel.updateActivate(!currentState)
@@ -60,61 +59,59 @@ class Menu: NSResponder {
         let quitMenuItem = MenuItem(title: "Quit Caffeinate", keyEquivalent: "q") { [viewModel] _ in
             viewModel.quit()
         }
-        statusBarItem.menu!.items = [
+        statusBarItem.menu?.items = [
             self.timeRemainingMenuItem,
             self.activateMenuItem,
             .separator(),
-            
+
             self.timeoutSubmenu,
             keepScreenOnMenuItem,
             .separator(),
-            
+
             sleepDisplayMenuItem,
             sleepMenuItem,
             .separator(),
-            
+
             quitMenuItem
         ]
     }
-    
-    func setupInteractions() {
-        viewModel.isTimeRemainingVisible
-            .subscribe(onNext: { [weak self] isVisible in
-                self?.timeRemainingMenuItem.isHidden = !isVisible
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.isActive
-            .subscribe(onNext: { [unowned self] isActive in
-                self.activateMenuItem.title = isActive ? "Deactivate" : "Activate"
-                self.statusBarItem.button!.appearsDisabled = !isActive
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.isKeepScreenOnChecked
-            .subscribe(onNext: { [unowned self] newValue in
-                self.keepScreenOnMenuItem.state = newValue ? .on : .off
-            })
-            .disposed(by: disposeBag)
+
+    private func setupInteractions() {
+        observations.append(viewModel.observeIsTimeRemainingVisible { [weak self] isVisible in
+            self?.timeRemainingMenuItem.isHidden = !isVisible
+        })
+
+        observations.append(viewModel.observeIsActive { [weak self] isActive in
+            guard let self else {
+                return
+            }
+
+            self.activateMenuItem.title = isActive ? "Deactivate" : "Activate"
+            self.statusBarItem.button?.appearsDisabled = !isActive
+            self.statusBarItem.button?.alphaValue = 1.0
+        })
+
+        observations.append(viewModel.observeIsKeepScreenOnChecked { [weak self] newValue in
+            self?.keepScreenOnMenuItem.state = newValue ? .on : .off
+        })
     }
- }
+}
 
-
-class MenuItem: NSMenuItem {
-    typealias Callback = (MenuItem) -> ()
+final class MenuItem: NSMenuItem {
+    typealias Callback = (MenuItem) -> Void
     var callback: Callback?
-    
+
     init(title: String, keyEquivalent: String?, action callback: Callback?) {
         self.callback = callback
         super.init(title: title, action: nil, keyEquivalent: keyEquivalent ?? "")
         self.target = self
         self.action = #selector(onClick)
     }
-    
+
     required init(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func onClick() {
         callback?(self)
     }

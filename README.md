@@ -7,6 +7,5 @@ You can download the latest stable version from [Releases](https://github.com/ni
 For the app to launch at startup, you will need to add it to *System Preferences → Users & Groups → Login Items*. The app will preserve its state across launches.
 
 ## Building from source
-1. [Install Carthage](https://github.com/Carthage/Carthage#installing-carthage).
-2. In the project directory run `carthage bootstrap --platform macOS --no-use-binaries`.
-3. Build the project.
+1. Open `Caffeinate.xcodeproj` in Xcode 26 or newer.
+2. Build the `Caffeinate` scheme.

@@ -7,14 +7,13 @@
 //
 
 import Cocoa
-import RxSwift
 
-class TimeoutMenuItem: NSMenuItem {
-    let timeout: Int?
-    
-    init(timeout: Int?) {
+final class TimeoutMenuItem: NSMenuItem {
+    let timeout: Timeout
+
+    init(timeout: Timeout) {
         self.timeout = timeout
-        
+
         let title: String
         if let timeout = timeout {
             title = formatter.string(from: TimeInterval(timeout))!
@@ -23,12 +22,11 @@ class TimeoutMenuItem: NSMenuItem {
         }
         super.init(title: title, action: nil, keyEquivalent: "")
     }
-    
+
     required init(coder decoder: NSCoder) {
         fatalError("Not implemented")
     }
 }
-
 
 fileprivate let formatter: DateComponentsFormatter = {
     let f = DateComponentsFormatter()
@@ -38,8 +36,6 @@ fileprivate let formatter: DateComponentsFormatter = {
     f.formattingContext = .listItem
     f.maximumUnitCount = 2
     f.unitsStyle = DateComponentsFormatter.UnitsStyle.full
-    
+
     return f
 }()
-
-

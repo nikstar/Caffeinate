@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		5828C79C1FBCE13300CF3EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828C79B1FBCE13300CF3EFE /* AppDelegate.swift */; };
 		5828C79E1FBCE13300CF3EFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5828C79D1FBCE13300CF3EFE /* Assets.xcassets */; };
-		5828C7B11FBDC04000CF3EFE /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5828C7AB1FBDC04000CF3EFE /* RxCocoa.framework */; };
-		5828C7B21FBDC04000CF3EFE /* RxCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5828C7AB1FBDC04000CF3EFE /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5828C7B31FBDC04000CF3EFE /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5828C7AC1FBDC04000CF3EFE /* RxSwift.framework */; };
-		5828C7B41FBDC04000CF3EFE /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5828C7AC1FBDC04000CF3EFE /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5828C7BB1FBDC2C300CF3EFE /* RxSwift.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */; };
-		5828C7BD1FBDC2C300CF3EFE /* RxCocoa.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */; };
 		5828C7C31FBDC34F00CF3EFE /* Caffeinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */; };
 		5846CCC821B01C6900E58085 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5846CCC721B01C6900E58085 /* State.swift */; };
 		586F10842011DE2E0021C43C /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F10832011DE2E0021C43C /* Menu.swift */; };
@@ -31,42 +25,12 @@
 		58E70D7921AC963F00F22C01 /* RemainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E70D7821AC963F00F22C01 /* RemainingViewModel.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5828C7B51FBDC04000CF3EFE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5828C7B41FBDC04000CF3EFE /* RxSwift.framework in Embed Frameworks */,
-				5828C7B21FBDC04000CF3EFE /* RxCocoa.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5828C7B61FBDC07F00CF3EFE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				5828C7BB1FBDC2C300CF3EFE /* RxSwift.framework.dSYM in CopyFiles */,
-				5828C7BD1FBDC2C300CF3EFE /* RxCocoa.framework.dSYM in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		5828C7981FBCE13300CF3EFE /* Caffeinate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caffeinate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5828C79B1FBCE13300CF3EFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5828C79D1FBCE13300CF3EFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5828C7A21FBCE13300CF3EFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5828C7A31FBCE13300CF3EFE /* Caffeinate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Caffeinate.entitlements; sourceTree = "<group>"; };
-		5828C7AB1FBDC04000CF3EFE /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/Mac/RxCocoa.framework; sourceTree = "<group>"; };
-		5828C7AC1FBDC04000CF3EFE /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
-		5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxSwift.framework.dSYM; path = Carthage/Build/Mac/RxSwift.framework.dSYM; sourceTree = "<group>"; };
-		5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = RxCocoa.framework.dSYM; path = Carthage/Build/Mac/RxCocoa.framework.dSYM; sourceTree = "<group>"; };
 		5828C7C21FBDC34F00CF3EFE /* Caffeinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Caffeinate.swift; sourceTree = "<group>"; };
 		5846CCC721B01C6900E58085 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		586F10832011DE2E0021C43C /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -88,8 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5828C7B31FBDC04000CF3EFE /* RxSwift.framework in Frameworks */,
-				5828C7B11FBDC04000CF3EFE /* RxCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				5828C79A1FBCE13300CF3EFE /* Caffeinate */,
-				5828C7C11FBDC31100CF3EFE /* Carthage */,
 				5828C7991FBCE13300CF3EFE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,17 +85,6 @@
 				58E70D6C21AC7F6D00F22C01 /* Behavior */,
 			);
 			path = Caffeinate;
-			sourceTree = "<group>";
-		};
-		5828C7C11FBDC31100CF3EFE /* Carthage */ = {
-			isa = PBXGroup;
-			children = (
-				5828C7B91FBDC2C300CF3EFE /* RxCocoa.framework.dSYM */,
-				5828C7B71FBDC2C200CF3EFE /* RxSwift.framework.dSYM */,
-				5828C7AB1FBDC04000CF3EFE /* RxCocoa.framework */,
-				5828C7AC1FBDC04000CF3EFE /* RxSwift.framework */,
-			);
-			name = Carthage;
 			sourceTree = "<group>";
 		};
 		58E70D6921AC7F3500F22C01 /* App */ = {
@@ -207,8 +157,6 @@
 				5828C7941FBCE13300CF3EFE /* Sources */,
 				5828C7951FBCE13300CF3EFE /* Frameworks */,
 				5828C7961FBCE13300CF3EFE /* Resources */,
-				5828C7B51FBDC04000CF3EFE /* Embed Frameworks */,
-				5828C7B61FBDC07F00CF3EFE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -346,7 +294,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -399,7 +347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -413,15 +361,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 6RX8GEVB43;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				INFOPLIST_FILE = Caffeinate/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nikstar.Caffeinate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -432,15 +376,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 6RX8GEVB43;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				INFOPLIST_FILE = Caffeinate/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nikstar.Caffeinate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

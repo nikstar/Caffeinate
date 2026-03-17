@@ -1,17 +1,22 @@
 import Foundation
 
 func sleepDisplay() {
-    let cmd = Process()
-    cmd.launchPath = "/usr/bin/pmset"
-    cmd.arguments = ["displaysleepnow"]
-    cmd.launch()
-    cmd.waitUntilExit()
+    runPmset(["displaysleepnow"])
 }
 
 func sleep() {
-    let cmd = Process()
-    cmd.launchPath = "/usr/bin/pmset"
-    cmd.arguments = ["sleepnow"]
-    cmd.launch()
-    cmd.waitUntilExit()
+    runPmset(["sleepnow"])
+}
+
+private func runPmset(_ arguments: [String]) {
+    let process = Process()
+    process.executableURL = URL(fileURLWithPath: "/usr/bin/pmset")
+    process.arguments = arguments
+
+    do {
+        try process.run()
+        process.waitUntilExit()
+    } catch {
+        print("Actions: failed to run pmset \(arguments): \(error)")
+    }
 }

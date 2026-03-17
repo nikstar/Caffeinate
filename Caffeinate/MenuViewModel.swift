@@ -7,39 +7,45 @@
 //
 
 import Cocoa
-import RxSwift
 
-class MenuViewModel {
-    fileprivate var state: ObservableState
+final class MenuViewModel {
+    private let state: ObservableState
+
     init(state: ObservableState) {
         self.state = state
     }
-    
-    lazy var isTimeRemainingVisible = state.observable
-        .map { state in
-            return state.isActive && state.settings.timeout != nil
-        }
-        .distinctUntilChanged()
 
-    lazy var isActive = state.observable.map { $0.isActive }.distinctUntilChanged()
-    lazy var isKeepScreenOnChecked = state.observable.map { $0.settings.keepScreenOn }.distinctUntilChanged()
+    @discardableResult
+    func observeIsTimeRemainingVisible(_ onChange: @escaping (Bool) -> Void) -> ObservableState.Observation {
+        state.observeDistinct({ $0.isActive && $0.settings.timeout != nil }, onChange: onChange)
+    }
+
+    @discardableResult
+    func observeIsActive(_ onChange: @escaping (Bool) -> Void) -> ObservableState.Observation {
+        state.observeDistinct(\.isActive, onChange: onChange)
+    }
+
+    @discardableResult
+    func observeIsKeepScreenOnChecked(_ onChange: @escaping (Bool) -> Void) -> ObservableState.Observation {
+        state.observeDistinct(\.settings.keepScreenOn, onChange: onChange)
+    }
 
     func updateActivate(_ newValue: Bool) {
         state.update(\.isActive, newValue)
     }
-    
+
     func updateKeepScreenOn(_ newValue: Bool) {
         state.update(\.settings.keepScreenOn, newValue)
     }
-    
+
     func sleepDisplayAction() {
         sleepDisplay()
     }
-    
+
     func sleepAction() {
         sleep()
     }
-    
+
     func quit() {
         NSApplication.shared.terminate(nil)
     }

@@ -8,14 +8,18 @@
 
 import Foundation
 
-class TimeoutViewModel {
-    fileprivate var state: ObservableState
+final class TimeoutViewModel {
+    private let state: ObservableState
+
     init(state: ObservableState) {
         self.state = state
     }
 
-    lazy var selectedTimeout = self.state.observable.map { $0.settings.timeout }
-    
+    @discardableResult
+    func observeSelectedTimeout(_ onChange: @escaping (Timeout) -> Void) -> ObservableState.Observation {
+        state.observeDistinct(\.settings.timeout, onChange: onChange)
+    }
+
     func setTimeout(_ newValue: Timeout) {
         state.update(\.settings.timeout, newValue)
     }

@@ -7,12 +7,10 @@
 //
 
 import Cocoa
-import RxSwift
-import RxCocoa
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-    
+@main
+final class AppDelegate: NSObject, NSApplicationDelegate {
+
     var state = ObservableState.loadFromDisk()
     var caffeinate: Caffeinate!
     var menu: Menu! {
@@ -20,16 +18,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApplication.shared.nextResponder = menu as NSResponder
         }
     }
-    
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         self.caffeinate = Caffeinate(state: state)
         self.menu = Menu(state: state)
     }
-    
+
     func applicationWillTerminate(_ notification: Notification) {
         caffeinate.forceStop()
         state.saveToDisk()
     }
 }
-
-
